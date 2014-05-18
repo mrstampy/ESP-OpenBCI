@@ -241,13 +241,14 @@ public class MultiConnectOpenBCISocket extends AbstractMultiConnectionSocket<byt
 		}, pause, snooze, tu);
 	}
 
-	private void processSnapshot(double[] snapshot, final int channelNumber) {
+	private void processSnapshot(double[] snapshot, int channelNumber) {
+		final int cn = channelNumber;
 		Observable.just(snapshot).subscribe(new Action1<double[]>() {
 
 			@Override
 			public void call(double[] snap) {
-				notifyListeners(snap, channelNumber);
-				if (canBroadcast()) subscriptionHandlerAdapter.sendMultiConnectionEvent(new OpenBCIEvent(snap, channelNumber));
+				notifyListeners(snap, cn);
+				if (canBroadcast()) subscriptionHandlerAdapter.sendMultiConnectionEvent(new OpenBCIEvent(snap, cn));
 			}
 		});
 	}
