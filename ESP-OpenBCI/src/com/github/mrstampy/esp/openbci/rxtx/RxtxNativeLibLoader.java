@@ -1,3 +1,21 @@
+/*
+ * ESP-OpenBCI Copyright (C) 2014 Burton Alexander
+ * 
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 3 of the License, or (at your option) any later
+ * version.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, write to the Free Software Foundation, Inc., 51
+ * Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * 
+ */
 package com.github.mrstampy.esp.openbci.rxtx;
 
 import java.io.BufferedInputStream;
@@ -9,21 +27,45 @@ import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class RxtxNativeLibLoader.
+ */
 public class RxtxNativeLibLoader {
 	private static final Logger log = LoggerFactory.getLogger(RxtxNativeLibLoader.class);
 
+	/** The Constant MAC_OS. */
 	public static final String MAC_OS = "apple";
+	
+	/** The Constant WINDOWS_OS. */
 	public static final String WINDOWS_OS = "windows";
 
+	/** The Constant LINUX_OS. */
 	public static final String LINUX_OS = "linux";
+	
+	/** The Constant X86_64_ARCH. */
 	public static final String X86_64_ARCH = "x86_64";
+	
+	/** The Constant IA64_ARCH. */
 	public static final String IA64_ARCH = "ia64";
+	
+	/** The Constant I686_ARCH. */
 	public static final String I686_ARCH = "i686";
 
+	/** The Constant SOLARIS_OS. */
 	public static final String SOLARIS_OS = "solaris";
+	
+	/** The Constant SPARC64_ARCH. */
 	public static final String SPARC64_ARCH = "sparc64";
+	
+	/** The Constant SPARC32_ARCH. */
 	public static final String SPARC32_ARCH = "sparc32";
 
+	/**
+	 * Load rxtx serial native lib.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static void loadRxtxSerialNativeLib() throws IOException {
 		String osName = System.getProperty("os.name").toLowerCase();
 		String osArch = System.getProperty("os.arch");
@@ -31,6 +73,13 @@ public class RxtxNativeLibLoader {
 		loadRxtxSerialNativeLib(osName, osArch);
 	}
 
+	/**
+	 * Load rxtx serial native lib.
+	 *
+	 * @param osName the os name
+	 * @param osArch the os arch
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static void loadRxtxSerialNativeLib(String osName, String osArch) throws IOException {
 		log.debug("Loading RXTX native lib for os {}, arch {}", osName, osArch);
 

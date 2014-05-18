@@ -1,3 +1,21 @@
+/*
+ * ESP-OpenBCI Copyright (C) 2014 Burton Alexander
+ * 
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 3 of the License, or (at your option) any later
+ * version.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, write to the Free Software Foundation, Inc., 51
+ * Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * 
+ */
 package com.github.mrstampy.esp.openbci.dsp;
 
 import java.util.Map;
@@ -10,11 +28,22 @@ import com.github.mrstampy.esp.dsp.RawSignalAggregator;
 import com.github.mrstampy.esp.openbci.MultiConnectOpenBCISocket;
 import com.github.mrstampy.esp.openbci.OpenBCIDSPValues;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class OpenBCIDSP.
+ */
 public class OpenBCIDSP extends EspDSP<MultiConnectOpenBCISocket> {
 
 	private OpenBCISignalAggregator aggregator;
 	private OpenBCISignalUtilities utilities = new OpenBCISignalUtilities();
 
+	/**
+	 * Instantiates a new open bcidsp.
+	 *
+	 * @param socket the socket
+	 * @param channelNumber the channel number
+	 * @param frequencies the frequencies
+	 */
 	public OpenBCIDSP(MultiConnectOpenBCISocket socket, int channelNumber, double... frequencies) {
 		super(socket, OpenBCIDSPValues.getInstance().getSampleRate(), frequencies);
 		
@@ -23,16 +52,25 @@ public class OpenBCIDSP extends EspDSP<MultiConnectOpenBCISocket> {
 		socket.addListener(aggregator);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.github.mrstampy.esp.dsp.EspDSP#destroyImpl()
+	 */
 	@Override
 	protected void destroyImpl() {
 		socket.removeListener(aggregator);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.github.mrstampy.esp.dsp.EspDSP#getAggregator()
+	 */
 	@Override
 	protected RawSignalAggregator getAggregator() {
 		return aggregator;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.github.mrstampy.esp.dsp.EspDSP#getUtilities()
+	 */
 	@Override
 	protected EspSignalUtilities getUtilities() {
 		return utilities;
@@ -40,9 +78,9 @@ public class OpenBCIDSP extends EspDSP<MultiConnectOpenBCISocket> {
 
 	/**
 	 * Main method to demonstrate {@link OpenBCIDSP} use.
-	 * 
-	 * @param args
-	 * @throws Exception
+	 *
+	 * @param args the arguments
+	 * @throws Exception the exception
 	 */
 	public static void main(String... args) throws Exception {
 		MultiConnectOpenBCISocket socket = new MultiConnectOpenBCISocket();

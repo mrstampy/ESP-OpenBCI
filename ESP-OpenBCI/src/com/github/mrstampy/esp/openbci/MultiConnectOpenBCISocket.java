@@ -1,3 +1,21 @@
+/*
+ * ESP-OpenBCI Copyright (C) 2014 Burton Alexander
+ * 
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 3 of the License, or (at your option) any later
+ * version.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, write to the Free Software Foundation, Inc., 51
+ * Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * 
+ */
 package com.github.mrstampy.esp.openbci;
 
 import static com.github.mrstampy.esp.openbci.OpenBCIProperties.getBooleanProperty;
@@ -40,6 +58,10 @@ import com.github.mrstampy.esp.openbci.rxtx.RxtxNativeLibLoader;
 import com.github.mrstampy.esp.openbci.subscription.OpenBCIEvent;
 import com.github.mrstampy.esp.openbci.subscription.OpenBCIEventListener;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class MultiConnectOpenBCISocket.
+ */
 public class MultiConnectOpenBCISocket extends AbstractMultiConnectionSocket<byte[]> {
 	private static final Logger log = LoggerFactory.getLogger(MultiConnectOpenBCISocket.class);
 
@@ -77,10 +99,21 @@ public class MultiConnectOpenBCISocket extends AbstractMultiConnectionSocket<byt
 	private Scheduler scheduler = Schedulers.executor(Executors.newScheduledThreadPool(5));
 	private Subscription subscription;
 
+	/**
+	 * Instantiates a new multi connect open bci socket.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public MultiConnectOpenBCISocket() throws IOException {
 		this(false);
 	}
 
+	/**
+	 * Instantiates a new multi connect open bci socket.
+	 *
+	 * @param broadcasting the broadcasting
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public MultiConnectOpenBCISocket(boolean broadcasting) throws IOException {
 		super(broadcasting);
 		initConnector();
@@ -97,14 +130,27 @@ public class MultiConnectOpenBCISocket extends AbstractMultiConnectionSocket<byt
 		}
 	}
 
+	/**
+	 * Adds the listener.
+	 *
+	 * @param l the l
+	 */
 	public void addListener(OpenBCIEventListener l) {
 		if (l != null && !listeners.contains(l)) listeners.add(l);
 	}
 
+	/**
+	 * Removes the listener.
+	 *
+	 * @param l the l
+	 */
 	public void removeListener(OpenBCIEventListener l) {
 		if (l != null) listeners.remove(l);
 	}
 
+	/**
+	 * Clear listeners.
+	 */
 	public void clearListeners() {
 		listeners.clear();
 	}
@@ -138,11 +184,17 @@ public class MultiConnectOpenBCISocket extends AbstractMultiConnectionSocket<byt
 		}, 10, TimeUnit.SECONDS);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.github.mrstampy.esp.multiconnectionsocket.MultiConnectionSocket#isConnected()
+	 */
 	@Override
 	public boolean isConnected() {
 		return connector.isActive();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.github.mrstampy.esp.multiconnectionsocket.AbstractMultiConnectionSocket#startImpl()
+	 */
 	@Override
 	protected void startImpl() throws MultiConnectionSocketException {
 		String error = "Could not connect to OpenBCI hardware";
@@ -196,6 +248,9 @@ public class MultiConnectOpenBCISocket extends AbstractMultiConnectionSocket<byt
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see com.github.mrstampy.esp.multiconnectionsocket.AbstractMultiConnectionSocket#stopImpl()
+	 */
 	@Override
 	protected void stopImpl() {
 		if (!isConnected()) return;
@@ -208,12 +263,18 @@ public class MultiConnectOpenBCISocket extends AbstractMultiConnectionSocket<byt
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see com.github.mrstampy.esp.multiconnectionsocket.AbstractMultiConnectionSocket#getHandlerAdapter()
+	 */
 	@Override
 	protected IoHandler getHandlerAdapter() {
 		subscriptionHandlerAdapter = new OpenBCISubscriptionHandlerAdapter(this);
 		return subscriptionHandlerAdapter;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.github.mrstampy.esp.multiconnectionsocket.AbstractMultiConnectionSocket#parseMessage(java.lang.Object)
+	 */
 	@Override
 	protected void parseMessage(byte[] message) {
 		Observable.just(message).subscribe(new Action1<byte[]>() {

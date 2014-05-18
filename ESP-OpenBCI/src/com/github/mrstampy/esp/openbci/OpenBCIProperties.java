@@ -1,3 +1,21 @@
+/*
+ * ESP-OpenBCI Copyright (C) 2014 Burton Alexander
+ * 
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 3 of the License, or (at your option) any later
+ * version.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, write to the Free Software Foundation, Inc., 51
+ * Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * 
+ */
 package com.github.mrstampy.esp.openbci;
 
 import java.io.IOException;
@@ -7,6 +25,10 @@ import java.util.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class OpenBCIProperties.
+ */
 public class OpenBCIProperties {
 	private static final Logger log = LoggerFactory.getLogger(OpenBCIProperties.class);
 
@@ -22,10 +44,22 @@ public class OpenBCIProperties {
 		}
 	}
 
+	/**
+	 * Gets the property.
+	 *
+	 * @param key the key
+	 * @return the property
+	 */
 	public static String getProperty(String key) {
 		return props.getProperty(key);
 	}
 
+	/**
+	 * Gets the integer property.
+	 *
+	 * @param key the key
+	 * @return the integer property
+	 */
 	public static int getIntegerProperty(String key) {
 		String val = getProperty(key);
 
@@ -37,6 +71,12 @@ public class OpenBCIProperties {
 		}
 	}
 
+	/**
+	 * Gets the double property.
+	 *
+	 * @param key the key
+	 * @return the double property
+	 */
 	public static double getDoubleProperty(String key) {
 		String val = getProperty(key);
 
@@ -48,20 +88,44 @@ public class OpenBCIProperties {
 		}
 	}
 
+	/**
+	 * Gets the boolean property.
+	 *
+	 * @param key the key
+	 * @return the boolean property
+	 */
 	public static boolean getBooleanProperty(String key) {
 		String val = getProperty(key);
 
 		return val == null ? false : Boolean.parseBoolean(val);
 	}
 
+	/**
+	 * Gets the channel name key.
+	 *
+	 * @param channelNumber the channel number
+	 * @return the channel name key
+	 */
 	public static String getChannelNameKey(int channelNumber) {
 		return "esp.openbci.channel" + channelNumber + ".name";
 	}
 
+	/**
+	 * Gets the channel identifer key.
+	 *
+	 * @param channelNumber the channel number
+	 * @return the channel identifer key
+	 */
 	public static String getChannelIdentiferKey(int channelNumber) {
 		return "esp.openbci.channel" + channelNumber + ".identifier";
 	}
 
+	/**
+	 * Gets the channel length key.
+	 *
+	 * @param channelNumber the channel number
+	 * @return the channel length key
+	 */
 	public static String getChannelLengthKey(int channelNumber) {
 		return "esp.openbci.channel" + channelNumber + ".length";
 	}
