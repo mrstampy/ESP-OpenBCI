@@ -38,14 +38,14 @@ public class OpenBCITester {
 	 */
 	protected static void testLocalAggregation() throws Exception {
 		System.out.println("Local Aggregation");
-		MultiConnectOpenBCISocket niaSocket = new MultiConnectOpenBCISocket();
+		MultiConnectOpenBCISocket socket = new MultiConnectOpenBCISocket();
 
 		OpenBCISignalAggregator aggregator = new OpenBCISignalAggregator(1);
-		niaSocket.addListener(aggregator);
+		socket.addListener(aggregator);
 
-		niaSocket.start();
+		socket.start();
 
-		printSampleLengths(aggregator, niaSocket);
+		printSampleLengths(aggregator, socket);
 	}
 
 	/**
@@ -57,7 +57,7 @@ public class OpenBCITester {
 	 */
 	protected static void testRemoteAggregation() throws Exception {
 		System.out.println("Remote Aggregation");
-		MultiConnectOpenBCISocket niaSocket = new MultiConnectOpenBCISocket(true);
+		MultiConnectOpenBCISocket socket = new MultiConnectOpenBCISocket(true);
 
 		OpenBCISocketConnector connector = new OpenBCISocketConnector("localhost");
 		OpenBCISignalAggregator aggregator = new OpenBCISignalAggregator(1);
@@ -66,9 +66,9 @@ public class OpenBCITester {
 		connector.connect();
 		connector.subscribe();
 
-		niaSocket.start();
+		socket.start();
 
-		printSampleLengths(aggregator, niaSocket);
+		printSampleLengths(aggregator, socket);
 	}
 
 	private static void printSampleLengths(OpenBCISignalAggregator aggregator, MultiConnectOpenBCISocket socket)
