@@ -131,7 +131,7 @@ public class OpenBCIProperties {
 	}
 
 	private static void loadProperties() throws IOException {
-		InputStream is = OpenBCIProperties.class.getResourceAsStream("esp.openbci.properties");
+		InputStream is = OpenBCIProperties.class.getResourceAsStream("/esp.openbci.properties");
 		props = new Properties();
 		props.load(is);
 	}

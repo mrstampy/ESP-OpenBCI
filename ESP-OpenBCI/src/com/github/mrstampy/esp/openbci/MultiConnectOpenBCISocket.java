@@ -81,11 +81,15 @@ public class MultiConnectOpenBCISocket extends AbstractMultiConnectionSocket<byt
 		String osName = getProperty("os.override.name");
 		String osArch = getProperty("os.override.arch");
 
-		if (osName == null && osArch == null) {
+		if (isEmpty(osArch) && isEmpty(osName)) {
 			RxtxNativeLibLoader.loadRxtxSerialNativeLib();
 		} else {
 			RxtxNativeLibLoader.loadRxtxSerialNativeLib(osName, osArch);
 		}
+	}
+	
+	private static boolean isEmpty(String s) {
+		return s == null || s.trim().length() == 0;
 	}
 
 	private SerialConnector connector;

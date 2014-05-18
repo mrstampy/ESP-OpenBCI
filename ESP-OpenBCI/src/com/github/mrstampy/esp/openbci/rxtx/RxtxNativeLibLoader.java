@@ -35,7 +35,7 @@ public class RxtxNativeLibLoader {
 	private static final Logger log = LoggerFactory.getLogger(RxtxNativeLibLoader.class);
 
 	/** The Constant MAC_OS. */
-	public static final String MAC_OS = "apple";
+	public static final String MAC_OS = "mac os x";
 	
 	/** The Constant WINDOWS_OS. */
 	public static final String WINDOWS_OS = "windows";
@@ -97,7 +97,9 @@ public class RxtxNativeLibLoader {
 	private static File extractToFileSystem(String path) throws IOException {
 		BufferedInputStream is = new BufferedInputStream(RxtxNativeLibLoader.class.getResourceAsStream(path));
 
-		File temp = File.createTempFile("esp.rxtx", ".tmp");
+		File tempDir = new File(System.getProperty("java.io.tmpdir"));
+		
+		File temp = new File(tempDir, path.substring(path.lastIndexOf("/") + 1, path.length()));
 		temp.deleteOnExit();
 
 		byte[] b = new byte[is.available()];
@@ -116,9 +118,9 @@ public class RxtxNativeLibLoader {
 	}
 
 	private static String getPath(String osName, String osArch) {
-		if (osName.contains(WINDOWS_OS)) return "Windows/i386-mingw32/rxtxSerial.dll";
+		if (osName.contains(WINDOWS_OS)) return "/Windows/i386-mingw32/rxtxSerial.dll";
 
-		if (osName.contains(MAC_OS)) return "Mac_OS_X/librxtxSerial.jnilib";
+		if (osName.contains(MAC_OS)) return "/Mac_OS_X/librxtxSerial.jnilib";
 
 		if (osName.contains(LINUX_OS)) return getLinuxNativeSerialLib(osArch);
 
@@ -128,19 +130,19 @@ public class RxtxNativeLibLoader {
 	}
 
 	private static String getSolarisNativeSerialLib(String osArch) {
-		if (osArch.contains(SPARC32_ARCH)) return "Solaris/sparc-solaris/sparc32-sun-solaris2.8/librxtxSerial.so";
+		if (osArch.contains(SPARC32_ARCH)) return "/Solaris/sparc-solaris/sparc32-sun-solaris2.8/librxtxSerial.so";
 
-		if (osArch.contains(SPARC64_ARCH)) return "Solaris/sparc-solaris/sparc64-sun-solaris2.8/librxtxSerial.so";
+		if (osArch.contains(SPARC64_ARCH)) return "/Solaris/sparc-solaris/sparc64-sun-solaris2.8/librxtxSerial.so";
 
 		throw new IllegalStateException("No Solaris RXTX native lib for " + osArch);
 	}
 
 	private static String getLinuxNativeSerialLib(String osArch) {
-		if (osArch.contains(I686_ARCH)) return "Linux/i686-unknown-linux-gnu/librxtxSerial.so";
+		if (osArch.contains(I686_ARCH)) return "/Linux/i686-unknown-linux-gnu/librxtxSerial.so";
 
-		if (osArch.contains(IA64_ARCH)) return "Linux/ia64-unknown-linux-gnu/librxtxSerial.so";
+		if (osArch.contains(IA64_ARCH)) return "/Linux/ia64-unknown-linux-gnu/librxtxSerial.so";
 
-		if (osArch.contains(X86_64_ARCH)) return "Linux/x86_64-unknown-linux-gnu/librxtxSerial.so";
+		if (osArch.contains(X86_64_ARCH)) return "/Linux/x86_64-unknown-linux-gnu/librxtxSerial.so";
 
 		throw new IllegalStateException("No Linux RXTX native lib for " + osArch);
 	}
