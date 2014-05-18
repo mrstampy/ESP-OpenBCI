@@ -102,7 +102,8 @@ public class MultiConnectOpenBCISocket extends AbstractMultiConnectionSocket<byt
 	/**
 	 * Instantiates a new multi connect open bci socket.
 	 *
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws IOException
+	 *           Signals that an I/O exception has occurred.
 	 */
 	public MultiConnectOpenBCISocket() throws IOException {
 		this(false);
@@ -111,8 +112,10 @@ public class MultiConnectOpenBCISocket extends AbstractMultiConnectionSocket<byt
 	/**
 	 * Instantiates a new multi connect open bci socket.
 	 *
-	 * @param broadcasting the broadcasting
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @param broadcasting
+	 *          the broadcasting
+	 * @throws IOException
+	 *           Signals that an I/O exception has occurred.
 	 */
 	public MultiConnectOpenBCISocket(boolean broadcasting) throws IOException {
 		super(broadcasting);
@@ -121,7 +124,7 @@ public class MultiConnectOpenBCISocket extends AbstractMultiConnectionSocket<byt
 	}
 
 	private void initSampleBuffers() {
-		int numChannels = getIntegerProperty("esp.openbci.num.channels");
+		int numChannels = OpenBCIDSPValues.getInstance().getNumChannels();
 
 		if (numChannels <= 0) throw new IllegalArgumentException("esp.openbci.num.channels property must be > 0");
 
@@ -133,7 +136,8 @@ public class MultiConnectOpenBCISocket extends AbstractMultiConnectionSocket<byt
 	/**
 	 * Adds the listener.
 	 *
-	 * @param l the l
+	 * @param l
+	 *          the l
 	 */
 	public void addListener(OpenBCIEventListener l) {
 		if (l != null && !listeners.contains(l)) listeners.add(l);
@@ -142,7 +146,8 @@ public class MultiConnectOpenBCISocket extends AbstractMultiConnectionSocket<byt
 	/**
 	 * Removes the listener.
 	 *
-	 * @param l the l
+	 * @param l
+	 *          the l
 	 */
 	public void removeListener(OpenBCIEventListener l) {
 		if (l != null) listeners.remove(l);
@@ -184,16 +189,24 @@ public class MultiConnectOpenBCISocket extends AbstractMultiConnectionSocket<byt
 		}, 10, TimeUnit.SECONDS);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.github.mrstampy.esp.multiconnectionsocket.MultiConnectionSocket#isConnected()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.github.mrstampy.esp.multiconnectionsocket.MultiConnectionSocket#isConnected
+	 * ()
 	 */
 	@Override
 	public boolean isConnected() {
 		return connector.isActive();
 	}
 
-	/* (non-Javadoc)
-	 * @see com.github.mrstampy.esp.multiconnectionsocket.AbstractMultiConnectionSocket#startImpl()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.github.mrstampy.esp.multiconnectionsocket.AbstractMultiConnectionSocket
+	 * #startImpl()
 	 */
 	@Override
 	protected void startImpl() throws MultiConnectionSocketException {
@@ -248,8 +261,12 @@ public class MultiConnectOpenBCISocket extends AbstractMultiConnectionSocket<byt
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see com.github.mrstampy.esp.multiconnectionsocket.AbstractMultiConnectionSocket#stopImpl()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.github.mrstampy.esp.multiconnectionsocket.AbstractMultiConnectionSocket
+	 * #stopImpl()
 	 */
 	@Override
 	protected void stopImpl() {
@@ -258,13 +275,17 @@ public class MultiConnectOpenBCISocket extends AbstractMultiConnectionSocket<byt
 		try {
 			connector.dispose();
 		} finally {
-			if(subscription != null) subscription.unsubscribe();
+			if (subscription != null) subscription.unsubscribe();
 			initConnector();
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see com.github.mrstampy.esp.multiconnectionsocket.AbstractMultiConnectionSocket#getHandlerAdapter()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.github.mrstampy.esp.multiconnectionsocket.AbstractMultiConnectionSocket
+	 * #getHandlerAdapter()
 	 */
 	@Override
 	protected IoHandler getHandlerAdapter() {
@@ -272,8 +293,12 @@ public class MultiConnectOpenBCISocket extends AbstractMultiConnectionSocket<byt
 		return subscriptionHandlerAdapter;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.github.mrstampy.esp.multiconnectionsocket.AbstractMultiConnectionSocket#parseMessage(java.lang.Object)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.github.mrstampy.esp.multiconnectionsocket.AbstractMultiConnectionSocket
+	 * #parseMessage(java.lang.Object)
 	 */
 	@Override
 	protected void parseMessage(byte[] message) {
@@ -283,8 +308,8 @@ public class MultiConnectOpenBCISocket extends AbstractMultiConnectionSocket<byt
 			public void call(byte[] t1) {
 				int channelNumber = getChannelNumber(t1);
 
-				if(channelNumber == -1) return;
-				
+				if (channelNumber == -1) return;
+
 				samples.get(channelNumber).addSample(t1);
 			}
 		});
