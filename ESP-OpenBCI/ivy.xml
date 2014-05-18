@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ivy-module version="2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd"
+	   xmlns:m="http://ant.apache.org/ivy/maven">
+       
+	<info organisation="com.github.mrstampy" module="esp-openbci" status="integration" revision="2.1-SNAPSHOT" />
+	    
+    <publications>
+        <artifact name="esp-openbci"/>
+        <artifact name="esp-openbci" type="pom" ext="pom" />
+        <artifact name="esp-openbci" type="javadoc" m:classifier="javadoc" ext="jar" />
+        <artifact name="esp-openbci" type="sources" m:classifier="sources" ext="jar" />
+    </publications>
+	
+	<dependencies>
+		<dependency org="com.github.mrstampy" name="esp" rev="2.1-SNAPSHOT"/>
+		<dependency org="org.apache.mina" name="mina-transport-serial" rev="2.0.7"/>
+	</dependencies>
+	
+</ivy-module>
