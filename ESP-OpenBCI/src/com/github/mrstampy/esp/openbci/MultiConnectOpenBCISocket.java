@@ -378,7 +378,7 @@ public class MultiConnectOpenBCISocket extends AbstractMultiConnectionSocket<byt
 
 				for (int i = 1; i < message.length; i++) {
 					if (message[i] == END_PACKET) {
-						return i == message.length;
+						return i == message.length - 1;
 					}
 				}
 
