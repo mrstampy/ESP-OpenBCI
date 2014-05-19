@@ -47,7 +47,8 @@ public class OpenBCIProperties {
 	/**
 	 * Gets the property.
 	 *
-	 * @param key the key
+	 * @param key
+	 *          the key
 	 * @return the property
 	 */
 	public static String getProperty(String key) {
@@ -57,7 +58,8 @@ public class OpenBCIProperties {
 	/**
 	 * Gets the integer property.
 	 *
-	 * @param key the key
+	 * @param key
+	 *          the key
 	 * @return the integer property
 	 */
 	public static int getIntegerProperty(String key) {
@@ -74,7 +76,8 @@ public class OpenBCIProperties {
 	/**
 	 * Gets the double property.
 	 *
-	 * @param key the key
+	 * @param key
+	 *          the key
 	 * @return the double property
 	 */
 	public static double getDoubleProperty(String key) {
@@ -91,43 +94,14 @@ public class OpenBCIProperties {
 	/**
 	 * Gets the boolean property.
 	 *
-	 * @param key the key
+	 * @param key
+	 *          the key
 	 * @return the boolean property
 	 */
 	public static boolean getBooleanProperty(String key) {
 		String val = getProperty(key);
 
 		return val == null ? false : Boolean.parseBoolean(val);
-	}
-
-	/**
-	 * Gets the channel name key.
-	 *
-	 * @param channelNumber the channel number
-	 * @return the channel name key
-	 */
-	public static String getChannelNameKey(int channelNumber) {
-		return "esp.openbci.channel" + channelNumber + ".name";
-	}
-
-	/**
-	 * Gets the channel identifer key.
-	 *
-	 * @param channelNumber the channel number
-	 * @return the channel identifer key
-	 */
-	public static String getChannelIdentiferKey(int channelNumber) {
-		return "esp.openbci.channel" + channelNumber + ".identifier";
-	}
-
-	/**
-	 * Gets the channel length key.
-	 *
-	 * @param channelNumber the channel number
-	 * @return the channel length key
-	 */
-	public static String getChannelLengthKey(int channelNumber) {
-		return "esp.openbci.channel" + channelNumber + ".length";
 	}
 
 	private static void loadProperties() throws IOException {
