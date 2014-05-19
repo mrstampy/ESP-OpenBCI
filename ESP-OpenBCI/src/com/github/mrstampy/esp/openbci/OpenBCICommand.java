@@ -20,14 +20,59 @@ package com.github.mrstampy.esp.openbci;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Interface OpenBCIConstants.
+ * The Enum OpenBCICommand.
  */
-public interface OpenBCIConstants {
+public enum OpenBCICommand {
 
-	/** The start packet. */
-	public static byte START_PACKET = (byte) (0xA0);
+	//@formatter:off
+	/** The stop. */
+	STOP("s"),
+	
+	/** The start text. */
+	START_TEXT("x"),
+	
+	/** The start binary. */
+	START_BINARY("b"),
+	
+	/** The start binary waux. */
+	START_BINARY_WAUX("n"),
+	
+	/** The STAR t_ binar y_4 chan. */
+	START_BINARY_4CHAN("v"),
+	
+	/** The activate filters. */
+	ACTIVATE_FILTERS("F"),
+	
+	/** The deactivate filters. */
+	DEACTIVATE_FILTERS("g"),
+	
+	/** The bias auto. */
+	BIAS_AUTO("`"),
+	
+	/** The bias fixed. */
+	BIAS_FIXED("~");
+	//@formatter:on
 
-	/** The end packet. */
-	public static byte END_PACKET = (byte) (0xC0);
+	/** The command. */
+	String command;
+
+	/**
+	 * Instantiates a new open bci command.
+	 *
+	 * @param command
+	 *          the command
+	 */
+	OpenBCICommand(String command) {
+		this.command = command;
+	}
+
+	/**
+	 * Gets the command.
+	 *
+	 * @return the command
+	 */
+	public String getCommand() {
+		return command;
+	}
 
 }

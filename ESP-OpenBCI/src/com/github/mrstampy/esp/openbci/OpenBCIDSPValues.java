@@ -41,7 +41,9 @@ public class OpenBCIDSPValues extends AbstractDSPValues {
 		super();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.github.mrstampy.esp.dsp.AbstractDSPValues#initialize()
 	 */
 	@Override

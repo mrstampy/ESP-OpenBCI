@@ -36,7 +36,8 @@ public class OpenBCISocketConnector extends AbstractSocketConnector<OpenBCIEvent
 	/**
 	 * Instantiates a new open bci socket connector.
 	 *
-	 * @param socketBroadcasterHost the socket broadcaster host
+	 * @param socketBroadcasterHost
+	 *          the socket broadcaster host
 	 */
 	public OpenBCISocketConnector(String socketBroadcasterHost) {
 		super(socketBroadcasterHost);
@@ -45,7 +46,8 @@ public class OpenBCISocketConnector extends AbstractSocketConnector<OpenBCIEvent
 	/**
 	 * Adds the listener.
 	 *
-	 * @param l the l
+	 * @param l
+	 *          the l
 	 */
 	public void addListener(OpenBCIEventListener l) {
 		if (l != null && !listeners.contains(l)) listeners.add(l);
@@ -54,7 +56,8 @@ public class OpenBCISocketConnector extends AbstractSocketConnector<OpenBCIEvent
 	/**
 	 * Removes the listener.
 	 *
-	 * @param l the l
+	 * @param l
+	 *          the l
 	 */
 	public void removeListener(OpenBCIEventListener l) {
 		if (l != null) listeners.remove(l);
@@ -76,16 +79,23 @@ public class OpenBCISocketConnector extends AbstractSocketConnector<OpenBCIEvent
 		return subscribe(new OpenBCISubscriptionRequest());
 	}
 
-	/* (non-Javadoc)
-	 * @see com.github.mrstampy.esp.multiconnectionsocket.AbstractSocketConnector#subscribeAll()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.github.mrstampy.esp.multiconnectionsocket.AbstractSocketConnector#
+	 * subscribeAll()
 	 */
 	@Override
 	public boolean subscribeAll() {
 		return subscribe();
 	}
 
-	/* (non-Javadoc)
-	 * @see com.github.mrstampy.esp.multiconnectionsocket.AbstractSocketConnector#processEvent(com.github.mrstampy.esp.multiconnectionsocket.event.AbstractMultiConnectionEvent)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.github.mrstampy.esp.multiconnectionsocket.AbstractSocketConnector#
+	 * processEvent(com.github.mrstampy.esp.multiconnectionsocket.event.
+	 * AbstractMultiConnectionEvent)
 	 */
 	@Override
 	protected void processEvent(AbstractMultiConnectionEvent<OpenBCIEventType> message) {

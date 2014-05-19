@@ -43,7 +43,8 @@ public class OpenBCIConnection extends AbstractRawEspConnection<MultiConnectOpen
 	/**
 	 * Instantiates a new open bci connection.
 	 *
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws IOException
+	 *           Signals that an I/O exception has occurred.
 	 */
 	public OpenBCIConnection() throws IOException {
 		this(false);
@@ -52,15 +53,19 @@ public class OpenBCIConnection extends AbstractRawEspConnection<MultiConnectOpen
 	/**
 	 * Instantiates a new open bci connection.
 	 *
-	 * @param broadcast the broadcast
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @param broadcast
+	 *          the broadcast
+	 * @throws IOException
+	 *           Signals that an I/O exception has occurred.
 	 */
 	public OpenBCIConnection(boolean broadcast) throws IOException {
 		socket = new MultiConnectOpenBCISocket(broadcast);
 		initAggregators();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.github.mrstampy.esp.dsp.lab.AbstractRawEspConnection#start()
 	 */
 	@Override
@@ -72,7 +77,9 @@ public class OpenBCIConnection extends AbstractRawEspConnection<MultiConnectOpen
 		super.start();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.github.mrstampy.esp.dsp.lab.AbstractRawEspConnection#stop()
 	 */
 	@Override
@@ -86,7 +93,9 @@ public class OpenBCIConnection extends AbstractRawEspConnection<MultiConnectOpen
 		}
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.github.mrstampy.esp.dsp.lab.RawEspConnection#getUtilities()
 	 */
 	@Override
@@ -94,7 +103,9 @@ public class OpenBCIConnection extends AbstractRawEspConnection<MultiConnectOpen
 		return utilities;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.github.mrstampy.esp.dsp.lab.RawEspConnection#getDSPValues()
 	 */
 	@Override
@@ -102,7 +113,9 @@ public class OpenBCIConnection extends AbstractRawEspConnection<MultiConnectOpen
 		return OpenBCIDSPValues.getInstance();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.github.mrstampy.esp.dsp.lab.RawEspConnection#getCurrent()
 	 */
 	@Override
@@ -110,7 +123,9 @@ public class OpenBCIConnection extends AbstractRawEspConnection<MultiConnectOpen
 		return getCurrentFor(1);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.github.mrstampy.esp.dsp.lab.RawEspConnection#getCurrent(int)
 	 */
 	@Override
@@ -118,7 +133,9 @@ public class OpenBCIConnection extends AbstractRawEspConnection<MultiConnectOpen
 		return getCurrentFor(numSamples, 1);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.github.mrstampy.esp.dsp.lab.RawEspConnection#getCurrentFor(int)
 	 */
 	@Override
@@ -126,15 +143,20 @@ public class OpenBCIConnection extends AbstractRawEspConnection<MultiConnectOpen
 		return aggregators.get(channelNumber).getCurrentSecondOfSampledData();
 	}
 
-	/* (non-Javadoc)
-	 * @see com.github.mrstampy.esp.dsp.lab.RawEspConnection#getCurrentFor(int, int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.github.mrstampy.esp.dsp.lab.RawEspConnection#getCurrentFor(int,
+	 * int)
 	 */
 	@Override
 	public double[][] getCurrentFor(int numSamples, int channelNumber) {
 		return aggregators.get(channelNumber).getCurrentSecondOfSampledData(numSamples);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.github.mrstampy.esp.dsp.lab.RawEspConnection#getName()
 	 */
 	@Override
@@ -142,7 +164,9 @@ public class OpenBCIConnection extends AbstractRawEspConnection<MultiConnectOpen
 		return "ESP OpenBCI";
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.github.mrstampy.esp.dsp.lab.AbstractRawEspConnection#getSocket()
 	 */
 	@Override

@@ -26,15 +26,17 @@ import com.github.mrstampy.esp.multiconnectionsocket.event.AbstractMultiConnecti
  */
 public class OpenBCIEvent extends AbstractMultiConnectionEvent<OpenBCIEventType> {
 	private static final long serialVersionUID = -8968759760933731795L;
-	
+
 	private final int channelNumber;
 	private final double[] sample;
 
 	/**
 	 * Instantiates a new open bci event.
 	 *
-	 * @param sample the sample
-	 * @param channelNumber the channel number
+	 * @param sample
+	 *          the sample
+	 * @param channelNumber
+	 *          the channel number
 	 */
 	public OpenBCIEvent(double[] sample, int channelNumber) {
 		super(OpenBCIEventType.rawSignal);

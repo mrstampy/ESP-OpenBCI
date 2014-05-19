@@ -40,19 +40,24 @@ public class OpenBCIDSP extends EspDSP<MultiConnectOpenBCISocket> {
 	/**
 	 * Instantiates a new open bcidsp.
 	 *
-	 * @param socket the socket
-	 * @param channelNumber the channel number
-	 * @param frequencies the frequencies
+	 * @param socket
+	 *          the socket
+	 * @param channelNumber
+	 *          the channel number
+	 * @param frequencies
+	 *          the frequencies
 	 */
 	public OpenBCIDSP(MultiConnectOpenBCISocket socket, int channelNumber, double... frequencies) {
 		super(socket, OpenBCIDSPValues.getInstance().getSampleRate(), frequencies);
-		
+
 		aggregator = new OpenBCISignalAggregator(channelNumber);
 
 		socket.addListener(aggregator);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.github.mrstampy.esp.dsp.EspDSP#destroyImpl()
 	 */
 	@Override
@@ -60,7 +65,9 @@ public class OpenBCIDSP extends EspDSP<MultiConnectOpenBCISocket> {
 		socket.removeListener(aggregator);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.github.mrstampy.esp.dsp.EspDSP#getAggregator()
 	 */
 	@Override
@@ -68,7 +75,9 @@ public class OpenBCIDSP extends EspDSP<MultiConnectOpenBCISocket> {
 		return aggregator;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.github.mrstampy.esp.dsp.EspDSP#getUtilities()
 	 */
 	@Override
@@ -79,8 +88,10 @@ public class OpenBCIDSP extends EspDSP<MultiConnectOpenBCISocket> {
 	/**
 	 * Main method to demonstrate {@link OpenBCIDSP} use.
 	 *
-	 * @param args the arguments
-	 * @throws Exception the exception
+	 * @param args
+	 *          the arguments
+	 * @throws Exception
+	 *           the exception
 	 */
 	public static void main(String... args) throws Exception {
 		MultiConnectOpenBCISocket socket = new MultiConnectOpenBCISocket();

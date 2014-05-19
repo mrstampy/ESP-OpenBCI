@@ -26,7 +26,7 @@ package com.github.mrstampy.esp.openbci.subscription;
  * 
  */
 public enum OpenBCIEventType {
-	
+
 	/** The raw signal. */
 	rawSignal;
 }

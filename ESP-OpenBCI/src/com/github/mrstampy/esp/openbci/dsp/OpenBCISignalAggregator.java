@@ -34,15 +34,20 @@ public final class OpenBCISignalAggregator extends RawSignalAggregator implement
 	/**
 	 * Instantiates a new open bci signal aggregator.
 	 *
-	 * @param channelNumber the channel number
+	 * @param channelNumber
+	 *          the channel number
 	 */
 	public OpenBCISignalAggregator(int channelNumber) {
 		super(OpenBCIDSPValues.getInstance().getSampleRate());
 		this.channelNumber = channelNumber;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.github.mrstampy.esp.openbci.subscription.OpenBCIEventListener#dataEventPerformed(com.github.mrstampy.esp.openbci.subscription.OpenBCIEvent)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.github.mrstampy.esp.openbci.subscription.OpenBCIEventListener#
+	 * dataEventPerformed
+	 * (com.github.mrstampy.esp.openbci.subscription.OpenBCIEvent)
 	 */
 	public void dataEventPerformed(OpenBCIEvent event) {
 		if (isForChannel(event)) addSample(event.getSample());

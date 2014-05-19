@@ -35,7 +35,8 @@ public class RxtxDataBuffer implements OpenBCIConstants {
 	/**
 	 * Adds the.
 	 *
-	 * @param message the message
+	 * @param message
+	 *          the message
 	 */
 	public void add(byte... message) {
 		byte[] b = new byte[buffer.length + message.length];
@@ -89,7 +90,7 @@ public class RxtxDataBuffer implements OpenBCIConstants {
 		System.arraycopy(buffer, 0, b, 0, b.length);
 		return b;
 	}
-	
+
 	/**
 	 * Clear.
 	 */
@@ -98,7 +99,7 @@ public class RxtxDataBuffer implements OpenBCIConstants {
 	}
 
 	private void resizeBuffer(int startIdx, int endIdx) {
-		if(startIdx != 0) log.warn("Dropping message part prior to index {}", startIdx);
+		if (startIdx != 0) log.warn("Dropping message part prior to index {}", startIdx);
 
 		byte[] b = new byte[buffer.length - 1 - endIdx];
 		System.arraycopy(buffer, endIdx + 1, b, 0, b.length);

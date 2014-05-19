@@ -22,10 +22,9 @@ import java.util.EventListener;
 
 // TODO: Auto-generated Javadoc
 /**
- * The listener interface for receiving openBCIEvent events.
- * The class that is interested in processing a openBCIEvent
- * event implements this interface, and the object created
- * with that class is registered with a component using the
+ * The listener interface for receiving openBCIEvent events. The class that is
+ * interested in processing a openBCIEvent event implements this interface, and
+ * the object created with that class is registered with a component using the
  * component's <code>addOpenBCIEventListener<code> method. When
  * the openBCIEvent event occurs, that object's appropriate
  * method is invoked.
@@ -37,7 +36,8 @@ public interface OpenBCIEventListener extends EventListener {
 	/**
 	 * Data event performed.
 	 *
-	 * @param event the event
+	 * @param event
+	 *          the event
 	 */
 	void dataEventPerformed(OpenBCIEvent event);
 }

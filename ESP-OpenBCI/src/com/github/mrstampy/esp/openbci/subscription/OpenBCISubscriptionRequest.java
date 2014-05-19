@@ -28,16 +28,22 @@ public class OpenBCISubscriptionRequest implements MultiConnectionSubscriptionRe
 
 	private static final long serialVersionUID = 6054403295795982525L;
 
-	/* (non-Javadoc)
-	 * @see com.github.mrstampy.esp.multiconnectionsocket.subscription.MultiConnectionSubscriptionRequest#getEventTypes()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.github.mrstampy.esp.multiconnectionsocket.subscription.
+	 * MultiConnectionSubscriptionRequest#getEventTypes()
 	 */
 	@Override
 	public OpenBCIEventType[] getEventTypes() {
 		return new OpenBCIEventType[] { OpenBCIEventType.rawSignal };
 	}
 
-	/* (non-Javadoc)
-	 * @see com.github.mrstampy.esp.multiconnectionsocket.subscription.MultiConnectionSubscriptionRequest#containsEventType(java.lang.Enum)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.github.mrstampy.esp.multiconnectionsocket.subscription.
+	 * MultiConnectionSubscriptionRequest#containsEventType(java.lang.Enum)
 	 */
 	@Override
 	public boolean containsEventType(OpenBCIEventType eventType) {

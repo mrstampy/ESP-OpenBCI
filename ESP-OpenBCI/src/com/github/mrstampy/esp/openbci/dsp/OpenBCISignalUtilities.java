@@ -49,7 +49,9 @@ public class OpenBCISignalUtilities extends EspSignalUtilities {
 		super(new HammingWindow());
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.github.mrstampy.esp.dsp.EspSignalUtilities#getFFTSize()
 	 */
 	@Override
@@ -57,7 +59,9 @@ public class OpenBCISignalUtilities extends EspSignalUtilities {
 		return OpenBCIDSPValues.getInstance().getSampleSize();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.github.mrstampy.esp.dsp.EspSignalUtilities#getSampleRate()
 	 */
 	@Override
@@ -65,7 +69,9 @@ public class OpenBCISignalUtilities extends EspSignalUtilities {
 		return OpenBCIDSPValues.getInstance().getSampleRate();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.github.mrstampy.esp.dsp.EspSignalUtilities#getRawSignalBreadth()
 	 */
 	@Override
@@ -73,7 +79,9 @@ public class OpenBCISignalUtilities extends EspSignalUtilities {
 		return SIGNAL_BREADTH;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.github.mrstampy.esp.dsp.EspSignalUtilities#getDSPValues()
 	 */
 	@Override

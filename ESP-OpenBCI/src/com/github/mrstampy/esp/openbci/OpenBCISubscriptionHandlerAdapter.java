@@ -38,14 +38,19 @@ public class OpenBCISubscriptionHandlerAdapter extends
 	/**
 	 * Instantiates a new open bci subscription handler adapter.
 	 *
-	 * @param socket the socket
+	 * @param socket
+	 *          the socket
 	 */
 	public OpenBCISubscriptionHandlerAdapter(MultiConnectOpenBCISocket socket) {
 		super(socket);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.github.mrstampy.esp.multiconnectionsocket.AbstractSubscriptionHandlerAdapter#messageReceived(org.apache.mina.core.session.IoSession, java.lang.Object)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.github.mrstampy.esp.multiconnectionsocket.
+	 * AbstractSubscriptionHandlerAdapter
+	 * #messageReceived(org.apache.mina.core.session.IoSession, java.lang.Object)
 	 */
 	@Override
 	public void messageReceived(IoSession session, Object message) throws Exception {

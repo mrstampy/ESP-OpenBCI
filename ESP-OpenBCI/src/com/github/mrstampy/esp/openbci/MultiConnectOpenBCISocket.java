@@ -18,6 +18,7 @@
  */
 package com.github.mrstampy.esp.openbci;
 
+import static com.github.mrstampy.esp.openbci.OpenBCIChannelCommand.getFromChannelNumber;
 import static com.github.mrstampy.esp.openbci.OpenBCIProperties.getBooleanProperty;
 import static com.github.mrstampy.esp.openbci.OpenBCIProperties.getIntegerProperty;
 import static com.github.mrstampy.esp.openbci.OpenBCIProperties.getProperty;
@@ -104,6 +105,8 @@ public class MultiConnectOpenBCISocket extends AbstractMultiConnectionSocket<byt
 	private Scheduler scheduler = Schedulers.executor(Executors.newScheduledThreadPool(5));
 	private Subscription subscription;
 
+	private OpenBCICommand startCommand = OpenBCICommand.START_BINARY;
+
 	/**
 	 * Instantiates a new multi connect open bci socket.
 	 *
@@ -128,14 +131,109 @@ public class MultiConnectOpenBCISocket extends AbstractMultiConnectionSocket<byt
 		initSampleBuffers();
 	}
 
-	private void initSampleBuffers() {
-		int numChannels = OpenBCIDSPValues.getInstance().getNumChannels();
-
-		if (numChannels <= 0) throw new IllegalArgumentException("esp.openbci.num.channels property must be > 0");
-
-		for (int i = 1; i <= numChannels; i++) {
-			samples.put(i, new SampleBuffer(i));
+	/**
+	 * Send command.
+	 *
+	 * @param command
+	 *          the command
+	 */
+	public void sendCommand(OpenBCICommand command) {
+		if (command == null || !isConnected()) {
+			log.warn("Cannot send command {}", command);
+			return;
 		}
+
+		connector.broadcast(command.getCommand());
+	}
+
+	/**
+	 * Activate channel.
+	 *
+	 * @param channelNumber
+	 *          the channel number
+	 */
+	public void activateChannel(int channelNumber) {
+		if (!isConnected()) {
+			log.warn("Cannot send activate for {}", channelNumber);
+			return;
+		}
+
+		connector.broadcast(getFromChannelNumber(channelNumber).getActivate());
+	}
+
+	/**
+	 * Deactivate channel.
+	 *
+	 * @param channelNumber
+	 *          the channel number
+	 */
+	public void deactivateChannel(int channelNumber) {
+		if (!isConnected()) {
+			log.warn("Cannot send deactivate for {}", channelNumber);
+			return;
+		}
+
+		connector.broadcast(getFromChannelNumber(channelNumber).getDeactivate());
+	}
+
+	/**
+	 * Activate leadoff n.
+	 *
+	 * @param channelNumber
+	 *          the channel number
+	 */
+	public void activateLeadoffN(int channelNumber) {
+		if (!isConnected()) {
+			log.warn("Cannot send activateLeadoffN for {}", channelNumber);
+			return;
+		}
+
+		connector.broadcast(getFromChannelNumber(channelNumber).getActivateLeadoffN());
+	}
+
+	/**
+	 * Activate leadoff p.
+	 *
+	 * @param channelNumber
+	 *          the channel number
+	 */
+	public void activateLeadoffP(int channelNumber) {
+		if (!isConnected()) {
+			log.warn("Cannot send activateLeadoffP for {}", channelNumber);
+			return;
+		}
+
+		connector.broadcast(getFromChannelNumber(channelNumber).getActivateLeadoffP());
+	}
+
+	/**
+	 * Deactivate leadoff n.
+	 *
+	 * @param channelNumber
+	 *          the channel number
+	 */
+	public void deactivateLeadoffN(int channelNumber) {
+		if (!isConnected()) {
+			log.warn("Cannot send deactivateLeadoffN for {}", channelNumber);
+			return;
+		}
+
+		connector.broadcast(getFromChannelNumber(channelNumber).getDeactivateLeadoffN());
+	}
+
+	/**
+	 * Deactivate leadoff p.
+	 *
+	 * @param channelNumber
+	 *          the channel number
+	 */
+	public void deactivateLeadoffP(int channelNumber) {
+		if (!isConnected()) {
+			log.warn("Cannot send deactivateLeadoffP for {}", channelNumber);
+			return;
+		}
+
+		connector.broadcast(getFromChannelNumber(channelNumber).getDeactivateLeadoffP());
 	}
 
 	/**
@@ -221,12 +319,23 @@ public class MultiConnectOpenBCISocket extends AbstractMultiConnectionSocket<byt
 			ConnectFuture cf = connector.connect(getSerialAddress());
 			cf.await(5000);
 			if (!cf.isConnected()) throw new MultiConnectionSocketException(error);
+			sendCommand(getStartCommand());
 		} catch (InterruptedException e) {
 			log.error(error, e);
 			throw new MultiConnectionSocketException(error, e);
 		}
 
 		scheduleSampling();
+	}
+
+	private void initSampleBuffers() {
+		int numChannels = OpenBCIDSPValues.getInstance().getNumChannels();
+
+		if (numChannels <= 0) throw new IllegalArgumentException("esp.openbci.num.channels property must be > 0");
+
+		for (int i = 1; i <= numChannels; i++) {
+			samples.put(i, new SampleBuffer(i));
+		}
 	}
 
 	private void scheduleSampling() {
@@ -279,6 +388,7 @@ public class MultiConnectOpenBCISocket extends AbstractMultiConnectionSocket<byt
 		if (!isConnected()) return;
 
 		try {
+			sendCommand(OpenBCICommand.STOP);
 			connector.dispose();
 		} finally {
 			if (subscription != null) subscription.unsubscribe();
@@ -429,6 +539,34 @@ public class MultiConnectOpenBCISocket extends AbstractMultiConnectionSocket<byt
 		String dbs = getProperty("data.bits");
 
 		return DataBits.valueOf(dbs);
+	}
+
+	/**
+	 * Gets the start command.
+	 *
+	 * @return the start command
+	 */
+	public OpenBCICommand getStartCommand() {
+		return startCommand;
+	}
+
+	/**
+	 * Sets the start command.
+	 *
+	 * @param startCommand
+	 *          the new start command
+	 */
+	public void setStartCommand(OpenBCICommand startCommand) {
+		switch (startCommand) {
+		case START_BINARY:
+		case START_BINARY_4CHAN:
+		case START_BINARY_WAUX:
+			break;
+		default:
+			log.error("startCommand must be one of the 'START_BINARY' command");
+			return;
+		}
+		this.startCommand = startCommand;
 	}
 
 }
