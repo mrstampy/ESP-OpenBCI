@@ -31,7 +31,8 @@ public class SampleBuffer extends RawDataSampleBuffer<byte[]> {
 	/**
 	 * Instantiates a new sample buffer.
 	 *
-	 * @param channelNumber the channel number
+	 * @param channelNumber
+	 *          the channel number
 	 */
 	public SampleBuffer(int channelNumber) {
 		super(OpenBCIProperties.getIntegerProperty("buffer.size.one.second"), OpenBCIDSPValues.getInstance()
@@ -48,24 +49,20 @@ public class SampleBuffer extends RawDataSampleBuffer<byte[]> {
 		return channelNumber;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.github.mrstampy.esp.multiconnectionsocket.RawDataSampleBuffer#addSample(java.lang.Object)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.github.mrstampy.esp.multiconnectionsocket.RawDataSampleBuffer#addSample
+	 * (java.lang.Object)
 	 */
 	public void addSample(byte[] buffer) {
-		int numSamples = getNumberOfSamples(buffer);
-
-		double[] samples = new double[numSamples];
-
-		process(buffer, samples);
-
-		addSampleImpl(samples);
+		addSampleImpl(interpretAsDouble(buffer));
 	}
 
-	private void process(byte[] buffer, double[] samples) {
-		// TODO Auto-generated method stub
+	// little endian
+	private double interpretAsDouble(byte[] byteArray) {
+		return (double) (((0xFF & byteArray[3]) << 24) | ((0xFF & byteArray[2]) << 16) | ((0xFF & byteArray[1]) << 8) | (0xFF & byteArray[0]));
 	}
 
-	private int getNumberOfSamples(byte[] data) {
-		return 10; // TODO implement me
-	}
 }

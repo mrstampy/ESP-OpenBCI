@@ -36,39 +36,42 @@ public class RxtxNativeLibLoader {
 
 	/** The Constant MAC_OS. */
 	public static final String MAC_OS = "mac os x";
-	
+
 	/** The Constant WINDOWS_OS. */
 	public static final String WINDOWS_OS = "windows";
-	
+
+	/** The Constant WIN_32_ARCH. */
 	public static final String WIN_32_ARCH = "x86";
-	
+
+	/** The Constant WIN_64_ARCH. */
 	public static final String WIN_64_ARCH = "64";
 
 	/** The Constant LINUX_OS. */
 	public static final String LINUX_OS = "linux";
-	
+
 	/** The Constant X86_64_ARCH. */
 	public static final String X86_64_ARCH = "x86_64";
-	
+
 	/** The Constant IA64_ARCH. */
 	public static final String IA64_ARCH = "ia64";
-	
+
 	/** The Constant I686_ARCH. */
 	public static final String I686_ARCH = "i686";
 
 	/** The Constant SOLARIS_OS. */
 	public static final String SOLARIS_OS = "solaris";
-	
+
 	/** The Constant SPARC64_ARCH. */
 	public static final String SPARC64_ARCH = "sparc64";
-	
+
 	/** The Constant SPARC32_ARCH. */
 	public static final String SPARC32_ARCH = "sparc32";
 
 	/**
 	 * Load rxtx serial native lib.
 	 *
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws IOException
+	 *           Signals that an I/O exception has occurred.
 	 */
 	public static void loadRxtxSerialNativeLib() throws IOException {
 		String osName = System.getProperty("os.name").toLowerCase();
@@ -80,9 +83,12 @@ public class RxtxNativeLibLoader {
 	/**
 	 * Load rxtx serial native lib.
 	 *
-	 * @param osName the os name
-	 * @param osArch the os arch
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @param osName
+	 *          the os name
+	 * @param osArch
+	 *          the os arch
+	 * @throws IOException
+	 *           Signals that an I/O exception has occurred.
 	 */
 	public static void loadRxtxSerialNativeLib(String osName, String osArch) throws IOException {
 		log.debug("Loading RXTX native lib for os {}, arch {}", osName, osArch);
@@ -102,7 +108,7 @@ public class RxtxNativeLibLoader {
 		BufferedInputStream is = new BufferedInputStream(RxtxNativeLibLoader.class.getResourceAsStream(path));
 
 		File tempDir = new File(System.getProperty("java.io.tmpdir"));
-		
+
 		File temp = new File(tempDir, path.substring(path.lastIndexOf("/") + 1, path.length()));
 		temp.deleteOnExit();
 
@@ -132,12 +138,12 @@ public class RxtxNativeLibLoader {
 
 		throw new IllegalStateException("No RXTX native lib for " + osName + ", " + osArch);
 	}
-	
+
 	private static String getWindowsNativeSerialLib(String osArch) {
-		if(osArch.contains(WIN_64_ARCH)) return "/Windows/64bit/rxtxSerial.dll";
-		
-		if(osArch.contains(WIN_32_ARCH)) return "/Windows/32bit/rxtxSerial.dll";
-		
+		if (osArch.contains(WIN_64_ARCH)) return "/Windows/64bit/rxtxSerial.dll";
+
+		if (osArch.contains(WIN_32_ARCH)) return "/Windows/32bit/rxtxSerial.dll";
+
 		return "/Windows/i386-mingw32/rxtxSerial.dll";
 	}
 
@@ -158,7 +164,7 @@ public class RxtxNativeLibLoader {
 
 		throw new IllegalStateException("No Linux RXTX native lib for " + osArch);
 	}
-	
+
 	private RxtxNativeLibLoader() {
 		// no instantiation for you
 	}

@@ -54,6 +54,7 @@ import rx.schedulers.Schedulers;
 
 import com.github.mrstampy.esp.multiconnectionsocket.AbstractMultiConnectionSocket;
 import com.github.mrstampy.esp.multiconnectionsocket.MultiConnectionSocketException;
+import com.github.mrstampy.esp.openbci.rxtx.RxtxDataBuffer;
 import com.github.mrstampy.esp.openbci.rxtx.RxtxNativeLibLoader;
 import com.github.mrstampy.esp.openbci.subscription.OpenBCIEvent;
 import com.github.mrstampy.esp.openbci.subscription.OpenBCIEventListener;
@@ -62,7 +63,7 @@ import com.github.mrstampy.esp.openbci.subscription.OpenBCIEventListener;
 /**
  * The Class MultiConnectOpenBCISocket.
  */
-public class MultiConnectOpenBCISocket extends AbstractMultiConnectionSocket<byte[]> {
+public class MultiConnectOpenBCISocket extends AbstractMultiConnectionSocket<byte[]> implements OpenBCIConstants {
 	private static final Logger log = LoggerFactory.getLogger(MultiConnectOpenBCISocket.class);
 
 	// load the RXTX native library
@@ -87,7 +88,7 @@ public class MultiConnectOpenBCISocket extends AbstractMultiConnectionSocket<byt
 			RxtxNativeLibLoader.loadRxtxSerialNativeLib(osName, osArch);
 		}
 	}
-	
+
 	private static boolean isEmpty(String s) {
 		return s == null || s.trim().length() == 0;
 	}
@@ -311,31 +312,77 @@ public class MultiConnectOpenBCISocket extends AbstractMultiConnectionSocket<byt
 
 			@Override
 			public void call(byte[] t1) {
-				int channelNumber = getChannelNumber(t1);
+				int numChannels = getNumChannels(t1);
 
-				if (channelNumber == -1) return;
+				if (!isValidMessage(t1, numChannels)) {
+					log.error("Invalid message received, expected {} channels (length {}) but message length was {}",
+							numChannels, getExpectedLength(numChannels), t1.length);
+					return;
+				}
 
-				samples.get(channelNumber).addSample(t1);
+				int idx = 2; // start of samples
+				for (int channelNumber = 1; channelNumber <= numChannels; channelNumber++) {
+					samples.get(channelNumber).addSample(getSample(t1, idx));
+					idx += 4;
+				}
+			}
+
+			private byte[] getSample(byte[] t1, int idx) {
+				byte[] sample = new byte[4];
+
+				System.arraycopy(t1, idx, sample, 0, 4);
+
+				return sample;
+			}
+
+			// start, stop & num channels + data
+			private int getExpectedLength(int numChannels) {
+				return 3 + (4 * numChannels);
+			}
+
+			private boolean isValidMessage(byte[] t1, int numChannels) {
+				return getExpectedLength(numChannels) == t1.length;
+			}
+
+			private int getNumChannels(byte[] t1) {
+				return ((int) t1[1]) / 4 - 1;
 			}
 		});
-	}
-
-	/*
-	 * @see OpenBCIProperties#getChannelIdentiferKey(int), return -1 to ignore
-	 */
-	private int getChannelNumber(byte[] message) {
-		return 1; // TODO implement me
 	}
 
 	private void initConnector() {
 		connector = new SerialConnector();
 		connector.setHandler(new IoHandlerAdapter() {
 
+			private RxtxDataBuffer buffer = new RxtxDataBuffer();
+
 			@Override
 			public void messageReceived(IoSession session, Object message) throws Exception {
-				// TODO a GROSS oversimplification; will need to be parsed to determine
-				// msg length etc. prior to publishing
-				publishMessage((byte[]) message);
+				byte[] msg = (byte[]) message;
+
+				boolean complete = isCompleteMessage(msg);
+
+				if (!complete) buffer.add(msg);
+
+				byte[] m = buffer.get();
+				while (m != null) {
+					publishMessage(m);
+					m = buffer.get();
+				}
+
+				if (complete) publishMessage(msg);
+			}
+
+			private boolean isCompleteMessage(byte[] message) {
+				if (message[0] != START_PACKET) return false;
+
+				for (int i = 1; i < message.length; i++) {
+					if (message[i] == END_PACKET) {
+						return i == message.length;
+					}
+				}
+
+				return false;
 			}
 
 			@Override

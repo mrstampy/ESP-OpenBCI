@@ -22,19 +22,20 @@ import com.github.mrstampy.esp.multiconnectionsocket.AbstractSocketConnector;
 import com.github.mrstampy.esp.openbci.dsp.OpenBCISignalAggregator;
 import com.github.mrstampy.esp.openbci.subscription.OpenBCISocketConnector;
 
+// TODO: Auto-generated Javadoc
 /**
  * Main class to demonstrate local and remote notifications from the
- * {@link MultiConnectOpenBCISocket}
- * 
+ * {@link MultiConnectOpenBCISocket}.
+ *
  * @author burton
- * 
  */
 public class OpenBCITester {
 
 	/**
 	 * Demonstrates local raw data acquisition from the OpenBCI.
-	 * 
+	 *
 	 * @throws Exception
+	 *           the exception
 	 */
 	protected static void testLocalAggregation() throws Exception {
 		System.out.println("Local Aggregation");
@@ -51,8 +52,9 @@ public class OpenBCITester {
 	/**
 	 * Connects to the {@link MultiConnectOpenBCISocket} on the default port
 	 * (12345) to receive raw data events.
-	 * 
+	 *
 	 * @throws Exception
+	 *           the exception
 	 * @see {@link AbstractSocketConnector#SOCKET_BROADCASTER_KEY}
 	 */
 	protected static void testRemoteAggregation() throws Exception {
@@ -94,10 +96,12 @@ public class OpenBCITester {
 
 	/**
 	 * No args == {@link #testLocalAggregation()}, any args ==
-	 * {@link #testRemoteAggregation()}
-	 * 
+	 * {@link #testRemoteAggregation()}.
+	 *
 	 * @param args
+	 *          the arguments
 	 * @throws Exception
+	 *           the exception
 	 */
 	public static void main(String[] args) throws Exception {
 		if (args.length == 0) {
