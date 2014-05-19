@@ -28,8 +28,8 @@ public enum OpenBCICommand {
 	/** The stop. */
 	STOP("s"),
 	
-	/** The start text. */
-	START_TEXT("x"),
+//	/** The start text. - not supported by ESP-OpenBCI */
+//	START_TEXT("x"),
 	
 	/** The start binary. */
 	START_BINARY("b"),
