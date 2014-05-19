@@ -43,6 +43,10 @@ public class RxtxNativeLibLoader {
 	/** The Constant LINUX_OS. */
 	public static final String LINUX_OS = "linux";
 	
+	public static final String WIN_32 = "x86";
+	
+	public static final String WIN_64 = "64";
+	
 	/** The Constant X86_64_ARCH. */
 	public static final String X86_64_ARCH = "x86_64";
 	
@@ -118,7 +122,7 @@ public class RxtxNativeLibLoader {
 	}
 
 	private static String getPath(String osName, String osArch) {
-		if (osName.contains(WINDOWS_OS)) return "/Windows/i386-mingw32/rxtxSerial.dll";
+		if (osName.contains(WINDOWS_OS)) return getWindowsNativeSerialLib(osArch);
 
 		if (osName.contains(MAC_OS)) return "/Mac_OS_X/librxtxSerial.jnilib";
 
@@ -127,6 +131,14 @@ public class RxtxNativeLibLoader {
 		if (osName.contains(SOLARIS_OS)) return getSolarisNativeSerialLib(osArch);
 
 		throw new IllegalStateException("No RXTX native lib for " + osName + ", " + osArch);
+	}
+	
+	private static String getWindowsNativeSerialLib(String osArch) {
+		if(osArch.contains(WIN_64)) return "/Windows/64bit/rxtxSerial.dll";
+		
+		if(osArch.contains(WIN_32)) return "/Windows/32bit/rxtxSerial.dll";
+		
+		return "/Windows/i386-mingw32/rxtxSerial.dll";
 	}
 
 	private static String getSolarisNativeSerialLib(String osArch) {
