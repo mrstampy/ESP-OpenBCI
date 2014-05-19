@@ -364,13 +364,17 @@ public class MultiConnectOpenBCISocket extends AbstractMultiConnectionSocket<byt
 
 				if (!complete) buffer.add(msg);
 
+				publishBufferedMessages();
+
+				if (complete) publishMessage(msg);
+			}
+
+			private void publishBufferedMessages() {
 				byte[] m = buffer.get();
 				while (m != null) {
 					publishMessage(m);
 					m = buffer.get();
 				}
-
-				if (complete) publishMessage(msg);
 			}
 
 			private boolean isCompleteMessage(byte[] message) {
