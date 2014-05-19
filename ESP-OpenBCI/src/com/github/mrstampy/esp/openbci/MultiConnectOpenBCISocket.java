@@ -542,7 +542,7 @@ public class MultiConnectOpenBCISocket extends AbstractMultiConnectionSocket<byt
 	}
 
 	/**
-	 * Gets the start command.
+	 * Gets the start command.  Defaults to START_BINARY.
 	 *
 	 * @return the start command
 	 */
