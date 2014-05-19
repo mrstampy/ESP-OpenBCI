@@ -38,7 +38,7 @@ public class OpenBCIProperties {
 		try {
 			loadProperties();
 		} catch (IOException e) {
-			String error = "Could not load esp.openbci.properties.  Ensure the file exists & is on the classpath";
+			String error = "Could not load esp.openbci.properties.  Ensure the file exists & is on the root of the classpath";
 			log.error(error, e);
 			throw new IllegalStateException(error, e);
 		}
