@@ -39,13 +39,13 @@ public class RxtxNativeLibLoader {
 	
 	/** The Constant WINDOWS_OS. */
 	public static final String WINDOWS_OS = "windows";
+	
+	public static final String WIN_32_ARCH = "x86";
+	
+	public static final String WIN_64_ARCH = "64";
 
 	/** The Constant LINUX_OS. */
 	public static final String LINUX_OS = "linux";
-	
-	public static final String WIN_32 = "x86";
-	
-	public static final String WIN_64 = "64";
 	
 	/** The Constant X86_64_ARCH. */
 	public static final String X86_64_ARCH = "x86_64";
@@ -134,9 +134,9 @@ public class RxtxNativeLibLoader {
 	}
 	
 	private static String getWindowsNativeSerialLib(String osArch) {
-		if(osArch.contains(WIN_64)) return "/Windows/64bit/rxtxSerial.dll";
+		if(osArch.contains(WIN_64_ARCH)) return "/Windows/64bit/rxtxSerial.dll";
 		
-		if(osArch.contains(WIN_32)) return "/Windows/32bit/rxtxSerial.dll";
+		if(osArch.contains(WIN_32_ARCH)) return "/Windows/32bit/rxtxSerial.dll";
 		
 		return "/Windows/i386-mingw32/rxtxSerial.dll";
 	}
