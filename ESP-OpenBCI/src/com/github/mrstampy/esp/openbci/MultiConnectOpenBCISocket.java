@@ -563,7 +563,7 @@ public class MultiConnectOpenBCISocket extends AbstractMultiConnectionSocket<byt
 		case START_BINARY_WAUX:
 			break;
 		default:
-			log.error("startCommand must be one of the 'START_BINARY' command");
+			log.error("startCommand must be one of the 'START_BINARY' commands");
 			return;
 		}
 		this.startCommand = startCommand;
