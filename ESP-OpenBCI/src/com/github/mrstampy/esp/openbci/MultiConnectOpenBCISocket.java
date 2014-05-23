@@ -430,7 +430,7 @@ public class MultiConnectOpenBCISocket extends AbstractMultiConnectionSocket<byt
 					return;
 				}
 
-				int idx = 2; // start of samples
+				int idx = CHANNELS_START_IDX; // start of samples
 				for (int channelNumber = 1; channelNumber <= numChannels; channelNumber++) {
 					samples.get(channelNumber).addSample(getSample(t1, idx));
 					idx += 4;
@@ -455,7 +455,7 @@ public class MultiConnectOpenBCISocket extends AbstractMultiConnectionSocket<byt
 			}
 
 			private int getNumChannels(byte[] t1) {
-				return ((int) t1[1]) / 4 - 1;
+				return ((int) t1[NUM_CHANNELS_IDX]) / 4 - 1;
 			}
 		});
 	}

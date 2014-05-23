@@ -25,9 +25,15 @@ package com.github.mrstampy.esp.openbci;
 public interface OpenBCIConstants {
 
 	/** The start packet. */
-	public static byte START_PACKET = (byte) (0xA0);
+	public static final byte START_PACKET = (byte) (0xA0);
 
 	/** The end packet. */
-	public static byte END_PACKET = (byte) (0xC0);
+	public static final byte END_PACKET = (byte) (0xC0);
+	
+	/** The num samples idx. */
+	public static final int NUM_CHANNELS_IDX = 1;
+	
+	/** The channels start idx. */
+	public static final int CHANNELS_START_IDX = 2;
 
 }
