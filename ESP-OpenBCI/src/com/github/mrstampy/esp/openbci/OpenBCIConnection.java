@@ -170,7 +170,7 @@ public class OpenBCIConnection extends AbstractRawEspConnection<MultiConnectOpen
 	 * @see com.github.mrstampy.esp.dsp.lab.AbstractRawEspConnection#getSocket()
 	 */
 	@Override
-	protected MultiConnectOpenBCISocket getSocket() {
+	public MultiConnectOpenBCISocket getSocket() {
 		return socket;
 	}
 
