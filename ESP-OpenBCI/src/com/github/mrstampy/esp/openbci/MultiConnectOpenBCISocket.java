@@ -24,6 +24,7 @@ import static com.github.mrstampy.esp.openbci.OpenBCIProperties.getIntegerProper
 import static com.github.mrstampy.esp.openbci.OpenBCIProperties.getProperty;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -54,6 +55,7 @@ import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 import com.github.mrstampy.esp.multiconnectionsocket.AbstractMultiConnectionSocket;
+import com.github.mrstampy.esp.multiconnectionsocket.EspChannel;
 import com.github.mrstampy.esp.multiconnectionsocket.MultiConnectionSocketException;
 import com.github.mrstampy.esp.openbci.rxtx.RxtxDataBuffer;
 import com.github.mrstampy.esp.openbci.rxtx.RxtxNativeLibLoader;
@@ -129,6 +131,7 @@ public class MultiConnectOpenBCISocket extends AbstractMultiConnectionSocket<byt
 		super(broadcasting);
 		initConnector();
 		initSampleBuffers();
+		setNumChannels(getIntegerProperty("esp.openbci.num.channels"));
 	}
 
 	/**
@@ -329,11 +332,9 @@ public class MultiConnectOpenBCISocket extends AbstractMultiConnectionSocket<byt
 	}
 
 	private void initSampleBuffers() {
-		int numChannels = OpenBCIDSPValues.getInstance().getNumChannels();
+		if (getNumChannels() <= 0) throw new IllegalArgumentException("esp.openbci.num.channels property must be > 0");
 
-		if (numChannels <= 0) throw new IllegalArgumentException("esp.openbci.num.channels property must be > 0");
-
-		for (int i = 1; i <= numChannels; i++) {
+		for (int i = 1; i <= getNumChannels(); i++) {
 			samples.put(i, new SampleBuffer(i));
 		}
 	}
@@ -542,7 +543,7 @@ public class MultiConnectOpenBCISocket extends AbstractMultiConnectionSocket<byt
 	}
 
 	/**
-	 * Gets the start command.  Defaults to START_BINARY.
+	 * Gets the start command. Defaults to START_BINARY.
 	 *
 	 * @return the start command
 	 */
@@ -567,6 +568,28 @@ public class MultiConnectOpenBCISocket extends AbstractMultiConnectionSocket<byt
 			return;
 		}
 		this.startCommand = startCommand;
+	}
+
+	@Override
+	public List<EspChannel> getChannels() {
+		List<EspChannel> channels = new ArrayList<EspChannel>();
+
+		for (int i = 1; i <= getNumChannels(); i++) {
+			channels.add(getChannel(i));
+		}
+
+		return channels;
+	}
+
+	@Override
+	public EspChannel getChannel(int channelNumber) {
+		if (channelNumber < 1 || channelNumber > getNumChannels()) {
+			log.warn("Invalid channel number {}. Values must be between 1 and {} inclusive", channelNumber, getNumChannels());
+			return null;
+		}
+
+		String desc = getProperty("esp.openbci.channel" + channelNumber + ".desc");
+		return new EspChannel(channelNumber, isEmpty(desc) ? "OpenBCI Channel " + channelNumber : desc);
 	}
 
 }

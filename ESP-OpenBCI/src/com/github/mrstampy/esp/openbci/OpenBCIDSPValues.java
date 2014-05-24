@@ -50,7 +50,6 @@ public class OpenBCIDSPValues extends AbstractDSPValues {
 	protected void initialize() {
 		setSampleRate(OpenBCIProperties.getIntegerProperty("sample.rate"));
 		setSampleSize(OpenBCIProperties.getIntegerProperty("fft.size"));
-		setNumChannels(OpenBCIProperties.getIntegerProperty("esp.openbci.num.channels"));
 	}
 
 }
