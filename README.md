@@ -6,7 +6,7 @@ This library provides the OpenBCI implementation of the [ESP](http://mrstampy.gi
 * [Javolution](http://javolution.org/)
 * [Apache MINA](http://mina.apache.org/)
 * [RxJava](https://github.com/Netflix/RxJava/)
-* 
+
 ## Release 2.1-RC2, 06-06-14 (Bugfix, Experimental)
 
 The OpenBCI implementation requires a properties file named 'esp.openbci.properties' to be completed and available on the root of the classpath. An example
