@@ -129,9 +129,9 @@ public class MultiConnectOpenBCISocket extends AbstractMultiConnectionSocket<byt
 	 */
 	public MultiConnectOpenBCISocket(boolean broadcasting) throws IOException {
 		super(broadcasting);
+		setNumChannels(getIntegerProperty("esp.openbci.num.channels"));
 		initConnector();
 		initSampleBuffers();
-		setNumChannels(getIntegerProperty("esp.openbci.num.channels"));
 	}
 
 	/**
